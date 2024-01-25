@@ -12,7 +12,7 @@ let db = null
 
 const initializeDBAndServer = async () => {
   try {
-    open({
+    db = await open({
       filename: dbPath,
       driver: sqlite3.Database,
     })
@@ -103,7 +103,7 @@ app.get('/states/', authenticateToken, async (request, response) => {
     `
   const stateList = await db.all(getStatesQuery)
   response.send(
-    stateList.map(eachState => convertStateObjToResponseObj(eachState)),
+    stateList.map((eachState) => convertStateObjToResponseObj(eachState)),
   )
 })
 
